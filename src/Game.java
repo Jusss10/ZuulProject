@@ -1,196 +1,184 @@
-/**
- * This class is the main class of the "World of Zuul" application.
- * "World of Zuul" is a very simple, text based adventure game.  Users
- * can walk around some scenery. That's all. It should really be extended
- * to make it more interesting!
- * <p>
- * To play this game, create an instance of this class and call the "play"
- * method.
- * <p>
- * This main class creates and initialises all the others: it creates all
- * rooms, creates the parser and starts the game.  It also evaluates and
- * executes the commands that the parser returns.
- *
- * @author Michael Kölling and David J. Barnes
- * @version 2011.07.31
- */
-
-public class Game {
+public class Game{
+    private CommandWords commands;
     private Parser parser;
     private Room currentRoom;
+    private Player player;
 
-    /**
-     * Create the game and initialise its internal map.
-     */
-    public Game() {
+    public Game(){
         createRooms();
         parser = new Parser();
+        commands=new CommandWords();
     }
 
-    /**
-     * Create all the rooms and link their exits together.
-     */
-    private void createRooms() {
-        Room outside, theater, pub, lab, office, cellar;
-        Item promoBoard, ashtray;
+    private void createRooms(){
+        Room bevrorenW, bos,veld,boerderij,boomstam,grot,ruines,struik,
+        vijver,grasveld,bloemenveld,verwoestD;
+        Item promoBoard,ashtray;
 
-        // create the rooms
-        outside = new Room("outside the main entrance of the university");
-        theater = new Room("in a lecture theater");
-        pub = new Room("in the campus pub");
-        lab = new Room("in a computing lab");
-        office = new Room("in the computing admin office");
-        cellar = new Room("in the cellar");
+        //create the rooms
+        bevrorenW= new Room("U look at the frozen water. This isn't what u want.\nThe need for survival files u with hope.....\n");
+        bos = new Room("Its cold and dark, but u see bushes every where.\nThe large trees around u make u a bit scared...\n");
+        veld=new Room("U arrive at a large field filled with glistering watermelons.\nThey look delicious..U want to eat one\n");
+        boerderij=new Room("U can smell the horse shit getting stronger.\nIts a farm full of unicorns.. They look thirsty....\n");
+        boomstam=new Room("All of a sudden u fall over.It hurts..\nU look behind u and see a giant tree trunk\n");
+        grot=new Room("The sounds of the forest are getting quite..\nWithout any warning u find urself in front of a cave..\nIt looks scary....\n");
+        ruines=new Room("U get airy feeling.The village u once used to know is destroyed..\nMaybe there are some treasurers to find in the rumble....\n");
+        struik=new Room("inthegrot");
+        vijver=new Room("inthegrot");
+        grasveld=new Room("uknow");
+        bloemenveld=new Room("inthegrot");
+        verwoestD=new Room("inthegrot");
 
-        // create the items
-        promoBoard = new Item("University promoboard", 2.3);
-        ashtray = new Item("Big yellow ashtray", 4.6);
+        bevrorenW.setExit("north",bos);
 
-        // initialise room exits
-        outside.setExit("east", theater);
-        outside.addItem(promoBoard);
-        outside.addItem(ashtray);
-        outside.setExit("south", lab);
-        outside.setExit("west", pub);
-        theater.setExit("west", outside);
-        pub.setExit("east", outside);
-        lab.setExit("north", outside);
-        lab.setExit("east", office);
-        office.setExit("west", lab);
-        office.setExit("down", cellar);
-        cellar.setExit("up", office);
+        bos.setExit("north",boerderij);
+        bos.setExit("east",veld);
 
-        currentRoom = outside;  // start game outside
+        veld.setExit("north",boomstam);
+        veld.setExit("east",grot);
+        grot.setExit("west",veld);
+
+        boerderij.setExit("west",verwoestD);
+        boerderij.setExit("east",boomstam);
+        boerderij.setExit("south",bos);
+
+        boomstam.setExit("north",ruines);
+        boomstam.setExit("south",veld);
+
+        verwoestD.setExit("east",boerderij);
+        verwoestD.setExit("north",bloemenveld);
+
+        bloemenveld.setExit("north",grasveld);
+        bloemenveld.setExit("south",verwoestD);
+
+        grasveld.setExit("east",vijver);
+        vijver.setExit("east",struik);
+        struik.setExit("south",ruines);
+
+
+        currentRoom = bevrorenW; //startgamebevrorenW
     }
 
-    /**
-     * Main play routine.  Loops until end of play.
-     */
-    public void play() {
+/**
+ *Mainplayroutine.Loopsuntilendofplay.
+ */
+    public void play(){
         printWelcome();
-
-        // Enter the main command loop.  Here we repeatedly read commands and
-        // execute them until the game is over.
-
-        boolean finished = false;
-        while (!finished) {
-            Command command = parser.getCommand();
-            finished = processCommand(command);
+        boolean finished=false;
+        while(!finished){
+        Command command = parser.getCommand();
+        finished= processCommand(command);
         }
-        System.out.println("Thank you for playing.  Good bye.");
+        System.out.println("Thank you for playing.Goodbye.");
     }
 
-    /**
-     * Print out the opening message for the player.
-     */
-    private void printWelcome() {
+/**
+ * Print out the opening message for th eplayer.
+ */
+    private void printWelcome(){
         System.out.println();
         System.out.println("Welcome to the World of Zuul!");
         System.out.println("World of Zuul is a new, incredibly boring adventure game.");
         System.out.println("Type 'help' if you need help.");
+        System.out.println("+-----------------------------------------------------------------------------+");
+        System.out.println("Type' "+ parser.getCommandString(CommandWord.HELP)+" 'if you need help.");
         System.out.println();
         printLocationInfo();
-    }
+        System.out.println();
+        System.out.println("What would u like to do?");
+        }
 
-    private void printLocationInfo() {
+        private void printLocationInfo(){
         System.out.println(currentRoom.getLongDescription());
         System.out.println();
     }
 
-    /**
-     * Given a command, process (that is: execute) the command.
-     *
-     * @param command The command to be processed.
-     * @return true If the command ends the game, false otherwise.
-     */
-    private boolean processCommand(Command command) {
-        boolean wantToQuit = false;
-
-        if (command.isUnknown()) {
+/**
+ * Given a command,process(that is: execute)the command.
+ */
+    private boolean processCommand(Command command){
+        boolean wantToQuit=false;
+        if(command.isUnknown()){
             System.out.println("I don't know what you mean...");
             return false;
         }
 
-        String commandWord = command.getCommandWord();
-        if (commandWord.equals("help")) {
-            printHelp();
-        } else if (commandWord.equals("look")) {
-            look();
-        } else if (commandWord.equals("eat")) {
-            eat();
-        } else if (commandWord.equals("go")) {
-            goRoom(command);
-        } else if (commandWord.equals("quit")) {
-            wantToQuit = quit(command);
+        String commandWord=command.getCommandWord();
+        switch(commandWord){
+        case UNKNOWN:
+        System.out.println("I don't know what you mean...");
+        break;
+        case HELP:
+        printHelp();
+        break;
+        case GO:
+        goRoom(command);
+        break;
+        case QUIT:
+        wantToQuit = quit(command);
+        break;
         }
-
         return wantToQuit;
     }
 
-    // implementations of user commands:
-
-    /**
-     * Print out some help information.
-     * Here we print some stupid, cryptic message and a list of the
-     * command words.
-     */
-    private void printHelp() {
-        System.out.println("You are lost. You are alone. You wander");
-        System.out.println("around at the university.");
-        System.out.println();
-        System.out.println("Your command words are:   " + parser.showCommands());
+    private void printHelp(){
+        System.out.println("Urgoal");
+        printLocationInfo();
+        System.out.println("Yourcommandwordsare:"+parser.showCommands());
         System.out.println();
     }
-
-    private void look() {
+    private void look(){
         System.out.println(currentRoom.getLongDescription());
     }
-
-    private void eat() {
-        System.out.println("Je hebt nu gegeten en bent niet meer hongerig\n");
+    private void eat(){
+        System.out.println("Jehebtnugegetenenbentnietmeerhongerig\n");
     }
-
-    /**
-     * Try to go in one direction. If there is an exit, enter
-     * the new room, otherwise print an error message.
-     */
-    private void goRoom(Command command) {
-        if (!command.hasSecondWord()) {
-            // if there is no second word, we don't know where to go...
+    private void back(){
+        System.out.println("urgoingback");
+    }
+    private void goRoom(Command command){
+        if(!command.hasSecondWord()){
+            //ifthereisnosecondword,wedon'tknowwheretogo...
             System.out.println("Go where?");
             return;
         }
 
         String direction = command.getSecondWord();
-
-        // Try to leave current room.
+        //Trytoleavecurrentroom.
         Room nextRoom = currentRoom.getExit(direction);
 
-        if (nextRoom == null) {
+        if(nextRoom==null){
             System.out.println("There is no door!");
-        } else {
-            currentRoom = nextRoom;
+        }else{
+            currentRoom=nextRoom;
             printLocationInfo();
         }
     }
-
-    /**
-     * "Quit" was entered. Check the rest of the command to see
-     * whether we really quit the game.
-     *
-     * @return true, if this command quits the game, false otherwise.
-     */
-    private boolean quit(Command command) {
-        if (command.hasSecondWord()) {
-            System.out.println("Quit what?");
-            return false;
-        } else {
-            return true;  // signal that we want to quit
+    private boolean quit(Command command){
+        if(command.hasSecondWord()){
+        System.out.println("Quitwhat?");
+        return false;
+        }else{
+        return true;//signalthatwewanttoquit
         }
     }
+    private void take(Command command){
+        if(!command.hasSecondWord()){
+            //ifthereisnosecondword,wedon'tknowwhattotake...
+            System.out.println("Takewhat?");
+            return;
+        }
+        String itemName = command.getSecondWord();
+        if(player.take(itemName)){
+            printLocationInfo();
+        }else{
+        System.out.println("Thereisnoitemherewiththename"+itemName);
+        }
+        }
 
-    public static void main(String[] args) {
-        Game game = new Game();
+        public static void main(String[]args){
+        Game game=new Game();
         game.play();
-    }
+        }
 }
+

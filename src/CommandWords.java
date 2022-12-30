@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 /**
  * This class is part of the "World of Zuul" application.
  * "World of Zuul" is a very simple, text based adventure game.
@@ -9,39 +11,57 @@
  * @version 2011.07.31
  */
 
-public class CommandWords {
-    // a constant array that holds all valid command words
-    private static final String[] validCommands = {
-            "go", "look", "eat", "quit", "help"
-    };
-
-    /**
-     * Constructor - initialise the command words.
-     */
-    public CommandWords() {
-        // nothing to do at the moment...
+public class CommandWords{
+    private HashMap<String,CommandWord> validCommands;
+    public enum CommandWord{
+        GO,QUIT,HELP,UNKNOWN
     }
 
-    /**
-     * Check whether a given String is a valid command word.
-     *
-     * @return true if a given string is a valid command,
-     * false if it isn't.
-     */
-    public boolean isCommand(String aString) {
-        for (int i = 0; i < validCommands.length; i++) {
-            if (validCommands[i].equals(aString))
-                return true;
+/**
+ *Constructor-initialisethecommandwords.
+ */
+    public CommandWords(){
+        validCommands=newHashMap<String,CommandWord>();
+        for(CommandWordcommand:CommandWord.values()){
+        if(command!=CommandWord.UNKNOWN){
+        validCommands.put(command.toString(),command);}}
         }
-        // if we get here, the string was not found in the commands
-        return false;
-    }
 
-    public String showAll() {
-        String show = "";
-        for (String command : validCommands) {
-            show += command + " ";
+/**
+ *CheckwhetheragivenStringisavalidcommandword.
+ *
+ *@returntrueifagivenstringisavalidcommand,
+ *falseifitisn't.
+ */
+        publicbooleanisCommand(StringaString){
+        for(inti=0;i<validCommands.containsKey(aString);i++){
+        if(validCommands[i].equals(aString))
+        returntrue;
         }
-        return show;
-    }
-}
+//ifwegethere,thestringwasnotfoundinthecommands
+        returnfalse;
+        }
+
+        publicStringshowAll(){
+        Stringshow="";
+        for(Stringcommand:validCommands){
+        show+=command+"";
+        }
+        returnshow;
+        }
+
+        publicCommandWordgetCommand(StringaString){
+        if(validCommands.containsKey(aString))returnvalidCommands.get(aString);
+        returnCommandWord.UNKNOWN;
+        }
+
+        publicStringgetCommandString(CommandWordscommandWord){
+        for(StringcommandString:validCommands.keySet()){
+        if(validCommands.get(commandString).equals(commandWord)){
+        returncommandString;
+        }
+        }
+        returnnull;
+        }
+        }
+
