@@ -21,8 +21,8 @@ public class CommandWords{
  *Constructor-initialisethecommandwords.
  */
     public CommandWords(){
-        validCommands=newHashMap<String,CommandWord>();
-        for(CommandWordcommand:CommandWord.values()){
+        validCommands= new HashMap<String,CommandWord>();
+        for(CommandWord command:CommandWord.values()){
         if(command!=CommandWord.UNKNOWN){
         validCommands.put(command.toString(),command);}}
         }
@@ -33,35 +33,33 @@ public class CommandWords{
  *@returntrueifagivenstringisavalidcommand,
  *falseifitisn't.
  */
-        publicbooleanisCommand(StringaString){
-        for(inti=0;i<validCommands.containsKey(aString);i++){
+
+    public boolean isCommand(String aString){
+        for(int i=0; i<validCommands.containsKey(aString);i++){
         if(validCommands[i].equals(aString))
-        returntrue;
-        }
-//ifwegethere,thestringwasnotfoundinthecommands
-        returnfalse;
-        }
+        return true;}
+        //ifwegethere,thestringwasnotfoundinthecommands
+        return false;
+    }
 
-        publicStringshowAll(){
-        Stringshow="";
-        for(Stringcommand:validCommands){
-        show+=command+"";
-        }
-        returnshow;
-        }
+    public String showAll(){
+        String show="";
+        for(String command:validCommands){
+        show += command+"";
+        } return show;
+    }
 
-        publicCommandWordgetCommand(StringaString){
-        if(validCommands.containsKey(aString))returnvalidCommands.get(aString);
-        returnCommandWord.UNKNOWN;
-        }
+    public CommandWord getCommand(String aString){
+        if(validCommands.containsKey(aString))return validCommands.get(aString);
+        return CommandWord.UNKNOWN;
+    }
 
-        publicStringgetCommandString(CommandWordscommandWord){
-        for(StringcommandString:validCommands.keySet()){
-        if(validCommands.get(commandString).equals(commandWord)){
-        returncommandString;
+    public String getCommandString(CommandWords commandWord){
+        for(String commandString:validCommands.keySet()){
+            if(validCommands.get(commandString).equals(commandWord)){
+            return commandString;}
         }
-        }
-        returnnull;
-        }
-        }
+        return null;
+    }
+}
 
