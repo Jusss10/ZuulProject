@@ -156,7 +156,7 @@ public class Game{
     }
     private boolean quit(Command command){
         if(command.hasSecondWord()){
-        System.out.println("Quitwhat?");
+        System.out.println("Quit what?");
         return false;
         }else{
         return true;//signalthatwewanttoquit
