@@ -37,7 +37,7 @@ public class Room{
         }
     public String getItemsString(){
         if(!items.isEmpty()){
-        String returnString="containsitems:\n";
+        String returnString="contains items:\n";
         for(Item item : items){returnString+=""+ item.getLongDescription()+"\n";}
             return returnString;
         }

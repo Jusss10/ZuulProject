@@ -13,38 +13,31 @@ import java.util.HashMap;
 
 public class CommandWords{
     private HashMap<String,CommandWord> validCommands;
-    public enum CommandWord{
-        GO,QUIT,HELP,UNKNOWN
+
+
+    /**
+     * Constructor - initialise the command words.
+     */
+    public CommandWords() {
+        validCommands.put("go", CommandWord.GO);
+        validCommands.put("help", CommandWord.HELP);
+        validCommands.put("quit", CommandWord.QUIT);
     }
 
-/**
- *Constructor-initialisethecommandwords.
- */
-    public CommandWords(){
-        validCommands= new HashMap<String,CommandWord>();
-        for(CommandWord command:CommandWord.values()){
-        if(command!=CommandWord.UNKNOWN){
-        validCommands.put(command.toString(),command);}}
-        }
+    /**
+     *CheckwhetheragivenStringisavalidcommandword.
+     *
+     *@returntrueifagivenstringisavalidcommand,
+     *falseifitisn't.
+     */
 
-/**
- *CheckwhetheragivenStringisavalidcommandword.
- *
- *@returntrueifagivenstringisavalidcommand,
- *falseifitisn't.
- */
-
-    public boolean isCommand(String aString){
-        for(int i=0; i<validCommands.containsKey(aString);i++){
-        if(validCommands[i].equals(aString))
-        return true;}
-        //ifwegethere,thestringwasnotfoundinthecommands
-        return false;
+    public boolean isCommand(String aString) {
+        return validCommands.containsKey(aString);
     }
 
     public String showAll(){
         String show="";
-        for(String command:validCommands){
+        for(String command : validCommands.keySet()){
         show += command+"";
         } return show;
     }
@@ -52,14 +45,6 @@ public class CommandWords{
     public CommandWord getCommand(String aString){
         if(validCommands.containsKey(aString))return validCommands.get(aString);
         return CommandWord.UNKNOWN;
-    }
-
-    public String getCommandString(CommandWords commandWord){
-        for(String commandString:validCommands.keySet()){
-            if(validCommands.get(commandString).equals(commandWord)){
-            return commandString;}
-        }
-        return null;
     }
 }
 

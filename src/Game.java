@@ -2,7 +2,6 @@ public class Game{
     private CommandWords commands;
     private Parser parser;
     private Room currentRoom;
-    private Player player;
 
     public Game(){
         createRooms();
@@ -78,10 +77,9 @@ public class Game{
     private void printWelcome(){
         System.out.println();
         System.out.println("Welcome to the World of Zuul!");
-        System.out.println("World of Zuul is a new, incredibly boring adventure game.");
-        System.out.println("Type 'help' if you need help.");
+        System.out.println("World of Zuul is a new, incredibly boring adventure game");
+        System.out.println("Type 'help' if you need help");
         System.out.println("+-----------------------------------------------------------------------------+");
-        System.out.println("Type' "+ parser.getCommandString(CommandWord.HELP)+" 'if you need help.");
         System.out.println();
         printLocationInfo();
         System.out.println();
@@ -96,30 +94,30 @@ public class Game{
 /**
  * Given a command,process(that is: execute)the command.
  */
-    private boolean processCommand(Command command){
-        boolean wantToQuit=false;
-        if(command.isUnknown()){
-            System.out.println("I don't know what you mean...");
-            return false;
-        }
+private boolean processCommand(Command command)
+{
+    boolean wantToQuit = false;
 
-        String commandWord=command.getCommandWord();
-        switch(commandWord){
-        case UNKNOWN:
+    if(command.isUnknown()) {
         System.out.println("I don't know what you mean...");
-        break;
-        case HELP:
-        printHelp();
-        break;
-        case GO:
-        goRoom(command);
-        break;
-        case QUIT:
-        wantToQuit = quit(command);
-        break;
-        }
-        return wantToQuit;
+        return false;
     }
+
+    CommandWord commandWord = command.getCommandWord();
+    switch (commandWord) {
+        case HELP:
+            printHelp();
+            break;
+        case GO:
+            goRoom(command);
+            break;
+        case QUIT:
+            wantToQuit = quit(command);
+            break;
+        default:
+    }
+    return wantToQuit;
+}
 
     private void printHelp(){
         System.out.println("Urgoal");
@@ -172,12 +170,12 @@ public class Game{
         if(player.take(itemName)){
             printLocationInfo();
         }else{
-        System.out.println("Thereisnoitemherewiththename"+itemName);
+        System.out.println("There is no item here with the name" + itemName);
         }
         }
 
         public static void main(String[]args){
-        Game game=new Game();
+        Game game = new Game();
         game.play();
         }
 }
