@@ -1,12 +1,10 @@
 public class Game{
-    private CommandWords commands;
     private Parser parser;
     private Room currentRoom;
 
     public Game(){
         createRooms();
         parser = new Parser();
-        commands=new CommandWords();
     }
 
     private void createRooms(){
@@ -63,7 +61,7 @@ public class Game{
  */
     public void play(){
         printWelcome();
-        boolean finished=false;
+        boolean finished = false;
         while(!finished){
         Command command = parser.getCommand();
         finished= processCommand(command);
@@ -94,8 +92,7 @@ public class Game{
 /**
  * Given a command,process(that is: execute)the command.
  */
-private boolean processCommand(Command command)
-{
+private boolean processCommand(Command command) {
     boolean wantToQuit = false;
 
     if(command.isUnknown()) {
@@ -120,9 +117,9 @@ private boolean processCommand(Command command)
 }
 
     private void printHelp(){
-        System.out.println("Urgoal");
+        System.out.println("Ur goal");
         printLocationInfo();
-        System.out.println("Yourcommandwordsare:"+parser.showCommands());
+        System.out.println("Your command word sare:"+parser.showCommands());
         System.out.println();
     }
     private void look(){
