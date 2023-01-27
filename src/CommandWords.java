@@ -12,7 +12,7 @@ import java.util.HashMap;
  */
 
 public class CommandWords{
-    private HashMap<String,CommandWord> validCommands;
+    private final HashMap<String, CommandWord> validCommands = new HashMap<>(); //Creating HashMap
 
 
     /**
@@ -22,6 +22,9 @@ public class CommandWords{
         validCommands.put("go", CommandWord.GO);
         validCommands.put("help", CommandWord.HELP);
         validCommands.put("quit", CommandWord.QUIT);
+        validCommands.put("look", CommandWord.LOOK);
+        validCommands.put("back", CommandWord.BACK);
+        validCommands.put("eat", CommandWord.EAT);
     }
 
     /**
@@ -35,10 +38,11 @@ public class CommandWords{
         return validCommands.containsKey(aString);
     }
 
+
     public String showAll(){
-        String show="";
+        String show=" ";
         for(String command : validCommands.keySet()){
-        show += command+"";
+        show += command+" ";
         } return show;
     }
 

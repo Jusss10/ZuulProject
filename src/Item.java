@@ -16,5 +16,5 @@ public class Item{
         this.description=description;
         }
 
-        public String getLongDescription(){return this.description+"withweightof";}
+        public String getLongDescription(){return this.description+"with weight of";}
 }

@@ -6,11 +6,13 @@ public class Room{
     private String description;
     private HashMap<String,Room> exits;
     private ArrayList<Item> items;
+    private Item key;
 
-    public Room(String description){
+    public Room(String description, Item key){
         this.description = description;
         exits = new HashMap<>();
         items = new ArrayList<>();
+        this.key = key;
     }
 
     public Room getExit(String direction){
@@ -28,7 +30,7 @@ public class Room{
         return description;
     }
     public String getExitString(){
-        String returnString="U look around and use an exit";
+        String returnString="You look around and see an exit";
         for(String direction : exits.keySet()){
         returnString+= " "+ direction;
         }

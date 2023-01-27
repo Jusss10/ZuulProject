@@ -1,3 +1,3 @@
 public enum CommandWord{
-    GO,QUIT,HELP,UNKNOWN
+    GO,QUIT,HELP,LOOK,BACK,EAT,UNKNOWN
 }
