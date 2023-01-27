@@ -114,9 +114,6 @@ public class Game{
         System.out.println("Thank you for playing.Goodbye.");
     }
 
-/**
- * Print out the opening message for th eplayer.
- */
     private void printWelcome(){
         System.out.println();
         System.out.println("Welcome to a cold winter day");
@@ -133,9 +130,6 @@ public class Game{
         System.out.println();
     }
 
-/**
- * Given a command,process(that is: execute)the command.
- */
     private boolean processCommand(Command command) {
         boolean wantToQuit = false;
 
@@ -204,13 +198,13 @@ public class Game{
         System.out.println("Quit what?");
         return false;
         }else{
-        return true;//signalthatwewanttoquit
+        return true;//signal that we want to quit
         }
     }
     private void take(Command command){
         if(!command.hasSecondWord()){
-            //ifthereisnosecondword,wedon'tknowwhattotake...
-            System.out.println("Takewhat?");
+            //if there is no second word,we don't know what to take...
+            System.out.println("Take what?");
             return;
         }
         String itemName = command.getSecondWord();
