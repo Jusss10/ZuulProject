@@ -37,17 +37,22 @@ public class Room{
         System.out.println("+-----------------------------------------------------------------------------+");
         return returnString;
         }
-    public String getItemsString(){
-        if(!items.isEmpty()){
-        String returnString="contains items:\n";
-        for(Item item : items){returnString+=""+ item.getLongDescription()+"\n";}
-            return returnString;
+
+    public String getLongDescription() {
+        StringBuilder descriptionBuilder = new StringBuilder(description);
+
+        if (!items.isEmpty()) {
+            descriptionBuilder.append("\nAround you u see:\n");
+            for (Item item : items) {
+                descriptionBuilder.append("- ").append(item.getLongDescription()).append("\n");
+            }
         }
-        return"";
+
+        descriptionBuilder.append(getExitString());
+
+        return descriptionBuilder.toString();
     }
-    public String getLongDescription(){
-        return description + getItemsString()+"\n"+getExitString();
-    }
+
     public boolean hasItem(String itemName){
         return false;
     }

@@ -12,7 +12,7 @@ import java.util.HashMap;
  */
 
 public class CommandWords{
-    private final HashMap<String, CommandWord> validCommands = new HashMap<>(); //Creating HashMap
+    private final HashMap <String, CommandWord> validCommands = new HashMap<>(); //Creating HashMap
 
 
     /**
@@ -27,17 +27,9 @@ public class CommandWords{
         validCommands.put("eat", CommandWord.EAT);
     }
 
-    /**
-     *CheckwhetheragivenStringisavalidcommandword.
-     *
-     *@returntrueifagivenstringisavalidcommand,
-     *falseifitisn't.
-     */
-
     public boolean isCommand(String aString) {
         return validCommands.containsKey(aString);
     }
-
 
     public String showAll(){
         String show=" ";

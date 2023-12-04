@@ -1,6 +1,3 @@
-import java.util.ArrayList;
-import java.util.List;
-
 public class Game{
     private Parser parser;
     private Room currentRoom;
@@ -73,6 +70,7 @@ public class Game{
                 """, null);
 
         frozenWater.setExit("north",forest);
+        frozenWater.addItem(flower);
 
         forest.setExit("north",farm);
         forest.setExit("east",field);
@@ -125,10 +123,11 @@ public class Game{
         System.out.println("What would u like to do?");
         }
 
-        private void printLocationInfo(){
+    private void printLocationInfo() {
         System.out.println(currentRoom.getLongDescription());
         System.out.println();
     }
+
 
     private boolean processCommand(Command command) {
         boolean wantToQuit = false;
@@ -145,6 +144,7 @@ public class Game{
         case EAT -> eat();
         case BACK -> back();
         case LOOK -> look();
+        case TAKE -> take(command);
         case QUIT -> wantToQuit = quit(command);
         default -> {
         }
