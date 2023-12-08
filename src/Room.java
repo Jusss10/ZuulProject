@@ -59,5 +59,8 @@ public class Room{
     public Item getItem(String itemName){
         return null;
     }
+
+    public void removeItem(Item item) {
+    }
 }
 

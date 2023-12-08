@@ -211,7 +211,7 @@ public class Game{
         if(player.take(itemName)){
             printLocationInfo();
         }else{
-        System.out.println("There is no item here with the name" + itemName);
+        System.out.println("There is no item here with the name " + itemName);
         }
 }
 

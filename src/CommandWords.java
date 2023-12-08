@@ -25,6 +25,7 @@ public class CommandWords{
         validCommands.put("look", CommandWord.LOOK);
         validCommands.put("back", CommandWord.BACK);
         validCommands.put("eat", CommandWord.EAT);
+        validCommands.put("take", CommandWord.TAKE);
     }
 
     public boolean isCommand(String aString) {
